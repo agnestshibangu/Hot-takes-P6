@@ -1,0 +1,26 @@
+GET http://localhost:3000
+
+### 
+GET  http://localhost:3000/users/61371aec80730f3b82dff7f2
+
+###
+DELETE  http://localhost:3000/users/61371aec80730f3b82dff7f2
+
+### 
+PATCH http://localhost:3000/users/61371aec80730f3b82dff7f2
+Content-Type: application/json
+
+{
+    "email" : "agnes@gmail.com",
+    "password" : "bambi"
+}
+
+
+###
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+    "email" : "agnes@gmail.com",
+    "password" : "keke"
+}
