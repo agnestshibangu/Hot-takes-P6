@@ -1,15 +1,11 @@
-const { application } = require('express')
-const express = require('express')
-const router = express.Router()
-const User = require('../models/user')
+const express = require('express');
+const router = express.Router();
 
 
-const auth = require('../middleware/multer-config')
-const userCtrl = require('../controllers/user')
+const userCtrl = require('../controllers/user');
+const auth = require('../middleware/auth')
 
-router.post('/signup', userCtrl.signup)
-router.post('/login',  userCtrl.login)
-
-
+router.post('/signup', auth, userCtrl.signup);
+router.post('/login', auth, userCtrl.login);
 
 module.exports = router;
