@@ -41,12 +41,4 @@ exports.login = (req, res, next) => {
 
 
 
-exports.getAllUser = async (req, res, next) => {
-    try {
-        const user = await User.find()
-        res.json(user)
-      } catch (err) {
-        res.status(500).json({ message: err.message })
-      }
-    };
 

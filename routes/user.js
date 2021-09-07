@@ -4,14 +4,11 @@ const router = express.Router()
 const User = require('../models/user')
 
 
-
+const auth = require('../middleware/multer-config')
 const userCtrl = require('../controllers/user')
 
 router.post('/signup', userCtrl.signup)
 router.post('/login',  userCtrl.login)
-
-
-
 
 
 

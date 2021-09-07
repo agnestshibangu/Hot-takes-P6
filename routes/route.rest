@@ -1,7 +1,13 @@
-GET http://localhost:3000
+GET http://localhost:8081/signup
+Content-Type: application/json
 
+{ 
+    "email" : "agnes@gmail.com",
+    "password" : "keke"
+   
+}
 ### 
-GET  http://localhost:3000/users/61371aec80730f3b82dff7f2
+GET  http://localhost:3000/users/61371aec80730f3b82dff7f2/efe
 
 ###
 DELETE  http://localhost:3000/users/61371aec80730f3b82dff7f2
