@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const userSauce = new mongoose.Schema({
+const sauceSchema = new mongoose.Schema({
     userId: {
         type: String
     },
@@ -16,7 +16,7 @@ const userSauce = new mongoose.Schema({
     mainPepper: {
         type: String
     },
-    imageurl: {
+    imageUrl: {
         type: String
     },
     heat: {
@@ -39,4 +39,4 @@ const userSauce = new mongoose.Schema({
 
 })
 
-module.exports = mongoose.model('User', userSchema)
+module.exports = mongoose.model('Sauce', sauceSchema)
