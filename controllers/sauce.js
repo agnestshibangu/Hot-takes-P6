@@ -13,49 +13,51 @@ exports.getOneSauce = (req, res) => {
     res.json(res.sauce)
   }
 
-
-
 // Create one
 exports.CreateASauce = async (req, res) => {
     const sauceObject = JSON.parse(req.body.sauce)
     delete sauceObject._id;
     const sauce = new Sauce ({
       ...sauceObject, 
-      imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+      imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+      dislikes: 0,
+      likes: 0
     })
     sauce.save()
     .then(() => res.status(201).json({ message: 'Objet enregistré !'}))
     .catch(error => res.status(400).json({ error }));
   }
 
-
-
-
 // Update one 
-exports.updateASauce =  async  (req, res) => {
-    const sauceObject = JSON.parse(req.body.sauce)
-    if (req.body.name != null) {
-      res.sauce.name = req.body.name
-    }
-    if (req.body.manufacturer != null) {
-      res.subscriber.manufacturer = req.body.manufacturer
-    }
-    if (req.body.description != null) {
-        res.subscriber.description = req.body.description
-      }
-    if (req.body.imageurl != null) {
-    res.subscriber.imageurl = req.body.imageurl
-    }
-    if (req.body.mainPepper != null) {
-        res.subscriber.mainPepper = req.body.mainPepper
-        }
-    try {
-      const updatedSauce = await res.sauce.save()
-      res.json(updatedSauce)
-    } catch (err) {
-      res.status(400).json({ message: err.message })
-    }
+// exports.updateASauce = (req, res, next) => {
+//   const sauceObject = { ...req.body };
+//   Sauce.updateOne({ _id: req.params.id}, { ...sauceObject, _id: req.params.id })        
+//       .then(() => res.status(200).json({message : 'Sauce modified !'}))
+//       .catch(error => res.status(400).json({ error }));  
+// };
+
+// Modify 
+exports.modifySauce = (req, res, next) => {
+    
+  if (req.file) {
+      Sauce.findOne({ _id: req.params.id })
+      .then((sauce) => {
+          const filename = sauce.imageUrl.split('/images/')[1];
+          fs.unlinkSync(`images/${filename}`);  
+      })
   }
+
+  const sauceObject = req.file ? {
+      ...JSON.parse(req.body.sauce),
+      imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+  } : { ...req.body };
+
+  Sauce.updateOne({ _id: req.params.id}, { ...sauceObject, _id: req.params.id })        
+      .then(() => res.status(200).json({message : 'Sauce modified !'}))
+      .catch(error => res.status(400).json({ error }));  
+      
+};
+
 
 // delete one
 exports.DeleteASauce = async (req, res) => {
@@ -66,6 +68,11 @@ exports.DeleteASauce = async (req, res) => {
       res.status(500).json({ message: err.message })
     }
   }
+
+
+
+
+
 
 
 // middleware get one sauce 
@@ -83,3 +90,59 @@ exports.getSauce = async (req, res, next) => {
     res.sauce = sauce
     next()
   }
+
+
+  // exports.updateASauce = (req, res, next) => {
+  //   const sauceObject = { ...req.body };
+  //   Sauce.updateOne({ _id: req.params.id}, { ...sauceObject, _id: req.params.id })        
+  //       .then(() => res.status(200).json({message : 'Sauce modified !'}))
+  //       .catch(error => res.status(400).json({ error }));  
+  // };
+
+  exports.likeSauce = (req, res, next) => {
+
+    console.log(req.body.like);
+
+     
+    switch (req.body.like) {
+    
+  
+    case 1:
+        
+        Sauce.updateOne({_id: req.params.id}, {
+            
+            $push:{usersLiked: req.body.userId },
+        
+            $inc:{likes: +1},
+        })
+
+        .then(() => res.status(200).json({message : 'Like added !'}))
+        .catch(error => res.status(400).json({ error }));
+    break;    
+  
+    case -1:
+
+        Sauce.updateOne({
+           
+            _id: req.params.id
+        }, {
+
+            $push:{
+                usersDisliked: req.body.userId
+            },
+
+            $inc:{
+                dislikes: +1
+            },
+        })
+    
+        .then(() => res.status(200).json({message : 'Diskike added !'}))
+        .catch(error => res.status(400).json({ error }));
+         
+
+    break;
+
+    default: console.error("Error");
+    }
+
+};

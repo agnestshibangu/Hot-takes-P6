@@ -13,7 +13,7 @@ mongoose.connect('mongodb+srv://agnes:helloword@cluster0.t5kfb.mongodb.net/piiqu
  
 
 
-// correct Cross Origin erros
+//correct Cross Origin erros
 const cors = require('cors')
 app.use(
   cors({
