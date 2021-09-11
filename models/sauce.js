@@ -30,11 +30,11 @@ const sauceSchema = new mongoose.Schema({
     },
     // à corriger
     userLiked: {
-        type: String
+        type: [String] 
     },
     // à corriger
     usersDisliked: {
-        type: String
+        type: [String] 
     }
 
 })

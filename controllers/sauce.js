@@ -21,7 +21,9 @@ exports.CreateASauce = async (req, res) => {
       ...sauceObject, 
       imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
       dislikes: 0,
-      likes: 0
+      likes: 0,
+      usersLiked: [],
+      usersDisliked: []
     })
     sauce.save()
     .then(() => res.status(201).json({ message: 'Objet enregistré !'}))
