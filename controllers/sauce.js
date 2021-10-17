@@ -94,17 +94,12 @@ exports.getSauce = async (req, res, next) => {
   }
 
 
-  // exports.updateASauce = (req, res, next) => {
-  //   const sauceObject = { ...req.body };
-  //   Sauce.updateOne({ _id: req.params.id}, { ...sauceObject, _id: req.params.id })        
-  //       .then(() => res.status(200).json({message : 'Sauce modified !'}))
-  //       .catch(error => res.status(400).json({ error }));  
-  // };
-
+// like or dislike sauce 
   exports.likeSauce = (req, res, next) => {
 
     console.log(req.body.like);
-
+    console.log('user' + req.body.userId)
+    console.log('sauce' + req.params.id)
      
     switch (req.body.like) {
     
@@ -129,9 +124,7 @@ exports.getSauce = async (req, res, next) => {
             _id: req.params.id
         }, {
 
-            $push:{
-                usersDisliked: req.body.userId
-            },
+            $push:{usersDisliked: req.body.userId },
 
             $inc:{
                 dislikes: +1
@@ -140,10 +133,15 @@ exports.getSauce = async (req, res, next) => {
     
         .then(() => res.status(200).json({message : 'Diskike added !'}))
         .catch(error => res.status(400).json({ error }));
+<<<<<<< HEAD
          
     break;
 
     
+=======
+    break;
+
+>>>>>>> 13593e7225e3e985ab8c9f1814e670a3628aa68f
     case 0:
         
       Sauce.findOne({
@@ -177,7 +175,11 @@ exports.getSauce = async (req, res, next) => {
                   _id: req.params.id
               }, {
                   $pull:{
+<<<<<<< HEAD
                     usersDisliked: req.body.userId
+=======
+                      usersDisliked: req.body.userId
+>>>>>>> 13593e7225e3e985ab8c9f1814e670a3628aa68f
                   },
                   $inc:{
                       dislikes: -1

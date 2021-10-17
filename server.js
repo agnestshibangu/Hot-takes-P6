@@ -1,4 +1,4 @@
-// // require('dotenv').config()
+require('dotenv').config()
 
 const express = require('express')
 const mongoose = require('mongoose')
@@ -7,9 +7,13 @@ const app = express()
 const path = require('path')
 const helmet = require("helmet")
 
+<<<<<<< HEAD
 
 
 mongoose.connect('mongodb+srv://agnes:123@cluster0.t5kfb.mongodb.net/piiquante?retryWrites=true&w=majority',
+=======
+mongoose.connect(`mongodb+srv://${process.env.DB_USER_NAME}:${process.env.DB_PASSWORD}@cluster0.t5kfb.mongodb.net/piiquante?retryWrites=true&w=majority`,
+>>>>>>> 13593e7225e3e985ab8c9f1814e670a3628aa68f
 { useNewUrlParser: true, useUnifiedTopology: true })
 .then(() => console.log('Connexion à MongoDB réussie !'))
 .catch(() => console.log('Connexion à MongoDB échouée'))
@@ -48,3 +52,6 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 
 // declaration port for server!'));
 app.listen(3000, () => console.log('server is running'))
+console.log(process.env.NODE_ENV)   
+console.log(process.env.DB_USER_NAME)
+console.log(process.env.DB_PASSWORD)
