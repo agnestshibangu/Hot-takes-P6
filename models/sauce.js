@@ -29,7 +29,7 @@ const sauceSchema = new mongoose.Schema({
         type: Number
     },
     // à corriger
-    userLiked: {
+    usersLiked: {
         type: [String] 
     },
     // à corriger

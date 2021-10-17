@@ -5,8 +5,11 @@ const mongoose = require('mongoose')
 const multer = require('multer')
 const app = express()
 const path = require('path')
+const helmet = require("helmet")
 
-mongoose.connect('mongodb+srv://agnes:helloword@cluster0.t5kfb.mongodb.net/piiquante?retryWrites=true&w=majority',
+
+
+mongoose.connect('mongodb+srv://agnes:123@cluster0.t5kfb.mongodb.net/piiquante?retryWrites=true&w=majority',
 { useNewUrlParser: true, useUnifiedTopology: true })
 .then(() => console.log('Connexion à MongoDB réussie !'))
 .catch(() => console.log('Connexion à MongoDB échouée'))
@@ -33,24 +36,8 @@ app.use(
 // payload = les données qu'on veut encoder
 app.use(express.json())
 
-// multer middleware
-// const fileStorageEngine = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, './images' )
-//   }, 
-//   filename : (req, file, cb) => {
-//     cb(null, Date.now() + '--' + file.originalname)
-//   }
-// })
-// const upload = multer({storage, fileStorageEngine })
 
-// app.post('/single', upload.single('image'), (req, res) => {
-//   console.log(req.file)
-//   res.send('single file upload success')
-// })
-
-
-
+app.use(helmet());
 // routes
 const userRoutes = require('./routes/user')
 const sauceRoutes = require('./routes/sauce')
