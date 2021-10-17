@@ -133,15 +133,10 @@ exports.getSauce = async (req, res, next) => {
     
         .then(() => res.status(200).json({message : 'Diskike added !'}))
         .catch(error => res.status(400).json({ error }));
-<<<<<<< HEAD
          
     break;
 
     
-=======
-    break;
-
->>>>>>> 13593e7225e3e985ab8c9f1814e670a3628aa68f
     case 0:
         
       Sauce.findOne({
@@ -175,11 +170,7 @@ exports.getSauce = async (req, res, next) => {
                   _id: req.params.id
               }, {
                   $pull:{
-<<<<<<< HEAD
                     usersDisliked: req.body.userId
-=======
-                      usersDisliked: req.body.userId
->>>>>>> 13593e7225e3e985ab8c9f1814e670a3628aa68f
                   },
                   $inc:{
                       dislikes: -1
